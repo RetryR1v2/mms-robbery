@@ -10,4 +10,5 @@ Locales["de_lang"] = {
     DynamitePrompt = 'Dynamit Platzieren',
     NoDynamite = 'Du hast kein Dynamit',
     LocationAlreadyBombed = 'Türe wurde bereits Aufgesprengt!',
+    NotEnoghCops = 'Nicht genug Beamte im Dienst. Benötigt: ',
 }

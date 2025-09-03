@@ -14,6 +14,9 @@
 # Changelog
 
 - 1.1.0 Initial Release Version
+- 1.1.1 Added System to Check for Duty Status.
+- VORP / DL / SYN Supported.
+- It now Only Alerts on Duty Cops
 
 # installation 
 

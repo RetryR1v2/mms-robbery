@@ -31,14 +31,39 @@ RegisterServerEvent('mms-robbery:server:AddLocationToAlreadyBombed',function(Cur
 end)
 
 RegisterServerEvent('mms-robbery:server:AlertPolice',function(CurrentLocation,Name)
-    local src = source
-    for h,v in ipairs(GetPlayers()) do
-        local Character = VORPcore.getUser(v).getUsedCharacter
-        local Job = Character.job
-        local PlayerSrc = v
-        for h,v in ipairs(Config.PoliceJobs) do
-            if v.Job == Job then
-                TriggerClientEvent('mms-robbery:client:SendAlertToPolice',PlayerSrc,CurrentLocation,Name)
+    if Config.synSociety then
+        for h,v in ipairs(GetPlayers()) do
+            local src = v
+            local Character = VORPcore.getUser(src).getUsedCharacter
+            local Job = Character.job
+            for h,v in ipairs(Config.PoliceJobs) do
+                if v.Job == Job then
+                    local DutyStatus = exports["syn_society"]:IsPlayerOnDuty(src, Job)
+                    if DutyStatus then
+                        TriggerClientEvent('mms-robbery:client:SendAlertToPolice',src,CurrentLocation,Name)
+                    end
+                end
+            end
+        end
+    elseif Config.DLSociety then
+        for h,v in ipairs(GetPlayers()) do
+            local src = v
+            local Character = VORPcore.getUser(src).getUsedCharacter
+            local Job = Character.job
+            for h,v in ipairs(Config.PoliceJobs) do
+                if v.Job == Job then
+                    local DutyStatus = exports.dl_society:getPlayerDutyStatus(src)
+                    if DutyStatus then
+                        TriggerClientEvent('mms-robbery:client:SendAlertToPolice',src,CurrentLocation,Name)
+                    end
+                end
+            end
+        end
+    elseif Config.VorpDutySystem then
+        for h,v in ipairs(GetPlayers()) do
+            local DutyStatus = Player(v).state.isPoliceDuty
+            if DutyStatus then
+                TriggerClientEvent('mms-robbery:client:SendAlertToPolice',v,CurrentLocation,Name)
             end
         end
     end
@@ -126,4 +151,45 @@ end)
 VORPcore.Callback.Register('mms-robbery:callback:CrackedOpenBanks', function(source,cb)
     local src = source
     return cb(AllBanks)
+end)
+
+VORPcore.Callback.Register('mms-robbery:callback:GetOnDutyPolice', function(source,cb)
+    local OnDutyPolice = 0
+    if Config.synSociety then
+        for h,v in ipairs(GetPlayers()) do
+            local src = v
+            local Character = VORPcore.getUser(src).getUsedCharacter
+            local Job = Character.job
+            for h,v in ipairs(Config.PoliceJobs) do
+                if v.Job == Job then
+                    local DutyStatus = exports["syn_society"]:IsPlayerOnDuty(src, Job)
+                    if DutyStatus then
+                        OnDutyPolice = OnDutyPolice + 1
+                    end
+                end
+            end
+        end
+    elseif Config.DLSociety then
+        for h,v in ipairs(GetPlayers()) do
+            local src = v
+            local Character = VORPcore.getUser(src).getUsedCharacter
+            local Job = Character.job
+            for h,v in ipairs(Config.PoliceJobs) do
+                if v.Job == Job then
+                    local DutyStatus = exports.dl_society:getPlayerDutyStatus(src)
+                    if DutyStatus then
+                        OnDutyPolice = OnDutyPolice + 1
+                    end
+                end
+            end
+        end
+    elseif Config.VorpDutySystem then
+        for h,v in ipairs(GetPlayers()) do
+            local DutyStatus = Player(v).state.isPoliceDuty
+            if DutyStatus then
+                OnDutyPolice = OnDutyPolice + 1
+            end
+        end
+    end
+    return cb(OnDutyPolice)
 end)

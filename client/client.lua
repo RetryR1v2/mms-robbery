@@ -7,6 +7,7 @@ local NPCPoliceSpawned = false
 local CreatedCops = {}
 local InRobbery = false
 local InBankRobbery = false
+local CanStartRobbery = true
 
 Citizen.CreateThread(function()
     local StoreGroup = BccUtils.Prompts:SetupPromptGroup()
@@ -33,6 +34,7 @@ Citizen.CreateThread(function()
             local Dynamite = v.Dynamite
             local Door = v.VaultDoor
             local BankCoords = v.CashLocations
+            local OnDutyCopsNeeded = v.OnDutyCopsNeeded
             for h,v in ipairs(v.Locations) do
                 local CurrentLocation = v.Coord
                 local dist = #(MyCoords - v.Coord)
@@ -49,7 +51,13 @@ Citizen.CreateThread(function()
                                     end
                                 end
                             end
-                            if not LocationAlreadyRobbed then
+                            local CopsOnDuty = VORPcore.Callback.TriggerAwait('mms-robbery:callback:GetOnDutyPolice')
+                            if OnDutyCopsNeeded <= CopsOnDuty then
+                                CanStartRobbery = true
+                            else
+                                CanStartRobbery = false
+                            end
+                            if not LocationAlreadyRobbed and CanStartRobbery then
                                 TriggerEvent('mms-robbery:client:InRobberyProgress',CurrentLocation)
                                 local CurrentChance = math.random(1,100)
                                 local HasLockpick = VORPcore.Callback.TriggerAwait('mms-robbery:callback:CheckForLockpick',LockpickItem)
@@ -90,8 +98,10 @@ Citizen.CreateThread(function()
                                 else
                                     VORPcore.NotifyRightTip(_U('NoLockpick'))
                                 end
-                            else
+                            elseif LocationAlreadyRobbed then
                                 VORPcore.NotifyRightTip(_U('LocationAlreadyRobbed'))
+                            elseif not CanStartRobbery then
+                                VORPcore.NotifyRightTip(_U('NotEnoghCops') .. OnDutyCopsNeeded)
                             end
                         end
                     elseif Type == 'Bank' then
@@ -105,7 +115,13 @@ Citizen.CreateThread(function()
                                     end
                                 end
                             end
-                            if not LocationAlreadyBombed then
+                            local CopsOnDuty = VORPcore.Callback.TriggerAwait('mms-robbery:callback:GetOnDutyPolice')
+                            if OnDutyCopsNeeded <= CopsOnDuty then
+                                CanStartRobbery = true
+                            else
+                                CanStartRobbery = false
+                            end
+                            if not LocationAlreadyBombed and CanStartRobbery then
                                 local HasDynamite = VORPcore.Callback.TriggerAwait('mms-robbery:callback:CheckForDynamite',DynamiteItem)
                                 if HasDynamite then
                                     local DynamiteObject = CreateObject(GetHashKey(Dynamite.Model),Dynamite.x,Dynamite.y,Dynamite.z,true,true,false)
@@ -140,8 +156,10 @@ Citizen.CreateThread(function()
                                 else
                                     VORPcore.NotifyRightTip(_U('NoDynamite'))
                                 end
-                            else
+                            elseif LocationAlreadyRobbed then
                                 VORPcore.NotifyRightTip(_U('LocationAlreadyBombed'))
+                            elseif not CanStartRobbery then
+                                VORPcore.NotifyRightTip(_U('NotEnoghCops') .. OnDutyCopsNeeded)
                             end
                         end
                     end

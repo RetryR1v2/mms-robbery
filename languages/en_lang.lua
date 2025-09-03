@@ -10,4 +10,5 @@ Locales["en_lang"] = {
     DynamitePrompt = 'Place Dynamite',
     NoDynamite = 'You don\'t have dynamite',
     LocationAlreadyBombed = 'The door has already been blown up!',
+    NotEnoghCops = 'Not Enogh Cops. Cops Needed: ',
 }
