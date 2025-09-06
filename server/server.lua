@@ -206,7 +206,9 @@ VORPcore.Callback.Register('mms-robbery:callback:GetOnDutyPolice', function(sour
                 if v.Job == Job then
                     local DutyStatus = exports["ez_society"]:IsPlayerOnDuty(src)
                     if DutyStatus then
-                        TriggerClientEvent('mms-robbery:client:SendAlertToPolice',src,CurrentLocation,Name)
+                        if DutyStatus then
+                            OnDutyPolice = OnDutyPolice + 1
+                        end
                     end
                 end
             end
