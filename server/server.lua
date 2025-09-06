@@ -59,6 +59,20 @@ RegisterServerEvent('mms-robbery:server:AlertPolice',function(CurrentLocation,Na
                 end
             end
         end
+    elseif Config.EZSociety then
+        for h,v in ipairs(GetPlayers()) do
+            local src = v
+            local Character = VORPcore.getUser(src).getUsedCharacter
+            local Job = Character.job
+            for h,v in ipairs(Config.PoliceJobs) do
+                if v.Job == Job then
+                    local DutyStatus = exports["ez_society"]:IsPlayerOnDuty(src)
+                    if DutyStatus then
+                        TriggerClientEvent('mms-robbery:client:SendAlertToPolice',src,CurrentLocation,Name)
+                    end
+                end
+            end
+        end
     elseif Config.VorpDutySystem then
         for h,v in ipairs(GetPlayers()) do
             local DutyStatus = Player(v).state.isPoliceDuty
@@ -179,6 +193,20 @@ VORPcore.Callback.Register('mms-robbery:callback:GetOnDutyPolice', function(sour
                     local DutyStatus = exports.dl_society:getPlayerDutyStatus(src)
                     if DutyStatus then
                         OnDutyPolice = OnDutyPolice + 1
+                    end
+                end
+            end
+        end
+    elseif Config.EZSociety then
+        for h,v in ipairs(GetPlayers()) do
+            local src = v
+            local Character = VORPcore.getUser(src).getUsedCharacter
+            local Job = Character.job
+            for h,v in ipairs(Config.PoliceJobs) do
+                if v.Job == Job then
+                    local DutyStatus = exports["ez_society"]:IsPlayerOnDuty(src)
+                    if DutyStatus then
+                        TriggerClientEvent('mms-robbery:client:SendAlertToPolice',src,CurrentLocation,Name)
                     end
                 end
             end

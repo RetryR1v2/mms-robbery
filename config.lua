@@ -21,6 +21,7 @@ Config.WHAvatar = '' -- must be 30x30px
 Config.synSociety = false -- If You Use SYN Society and go OnDuty in Syn
 Config.VorpDutySystem = true -- VORP DUtySystem
 Config.DLSociety = false -- DL Society
+Config.EZSociety = false -- EZ Society
 
 -- Reset Robbed Locations
 
