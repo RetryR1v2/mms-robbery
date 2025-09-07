@@ -16,16 +16,21 @@ Config.WHAvatar = '' -- must be 30x30px
 
 -- Script Settings
 
+-- Cooldown Settings
+-- Global Cooldowns for Robbery only 1 Robbery or Bank at a Time
+Config.RobberyCooldown = 15 -- Time in Min
+Config.BankCooldown = 30 -- Time in Min
+
+-- Reset Robbed Locations
+
+Config.ResetAllLocationsTime = 60 -- Time in Min i Recommended 60 mins or Higher it Resets on Server Restart Anyway
+
 -- OnDuty Settings
 
 Config.synSociety = false -- If You Use SYN Society and go OnDuty in Syn
 Config.VorpDutySystem = true -- VORP DUtySystem
 Config.DLSociety = false -- DL Society
 Config.EZSociety = false -- EZ Society
-
--- Reset Robbed Locations
-
-Config.ResetLocationTime = 60 -- Time in Min
 
 -- xsound Settings Stores
 Config.PlayAlarms = true

@@ -11,4 +11,5 @@ Locales["de_lang"] = {
     NoDynamite = 'Du hast kein Dynamit',
     LocationAlreadyBombed = 'Türe wurde bereits Aufgesprengt!',
     NotEnoghCops = 'Nicht genug Beamte im Dienst. Benötigt: ',
+    CantRobCurrently = 'Es wurde bereits ein Raub Ausgeführt Bitte etwas Gedult',
 }

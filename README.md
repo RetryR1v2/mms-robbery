@@ -18,6 +18,7 @@
 - VORP / DL / SYN Supported.
 - It now Only Alerts on Duty Cops
 - 1.1.2 Added EZ Society Support.
+- 1.1.3 Added Global Cooldowns for Robberys only 1 Robbery at a time.
 
 # installation 
 

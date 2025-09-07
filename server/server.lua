@@ -5,8 +5,10 @@ local AlreadyRobbedCoords = {}
 local AlreadyBombedCoords = {}
 local AllBanks = {}
 
+local RobberyCooldown = false
+
 Citizen.CreateThread(function()
-    local Timer = Config.ResetLocationTime * 60000
+    local Timer = Config.ResetAllLocationsTime * 60000
     while true do
         Citizen.Wait(60000)
         Timer = Timer - 60000
@@ -17,7 +19,7 @@ Citizen.CreateThread(function()
             for h,v in ipairs(GetPlayers()) do
                 TriggerClientEvent('mms-robbery:client:ResetDoors',v)
             end
-            Timer = Config.ResetLocationTime * 60000
+            Timer = Config.ResetAllLocationsTime * 60000
         end
     end
 end)
@@ -88,7 +90,7 @@ RegisterServerEvent('mms-robbery:server:DestroyLockpick',function(LockpickItem)
     exports.vorp_inventory:subItem(src, LockpickItem, 1)
 end)
 
-RegisterServerEvent('mms-robbery:server:Reward',function(Reward)
+RegisterServerEvent('mms-robbery:server:Reward',function(Reward,Type)
     local src = source
     local Character = VORPcore.getUser(src).getUsedCharacter
     if Reward.Money then
@@ -100,6 +102,26 @@ RegisterServerEvent('mms-robbery:server:Reward',function(Reward)
         for h,v in ipairs(Reward.Items) do
             exports.vorp_inventory:addItem(src, v.ItemName, v.Amount)
             VORPcore.NotifyRightTip(src,_U('RewardItem') .. v.Amount .. ' ' .. v.ItemLabel,5000)
+        end
+    end
+    if Type == 'Bank' and not RobberyCooldown then
+        local RobberyCooldownTimer = Config.BankCooldown * 60000
+        RobberyCooldown = true
+        TriggerEvent('mms-robbery:server:RobberyCooldown',RobberyCooldownTimer)
+    elseif Type == 'Store' and not RobberyCooldown then
+        local RobberyCooldownTimer = Config.RobberyCooldown * 60000
+        RobberyCooldown = true
+        TriggerEvent('mms-robbery:server:RobberyCooldown',RobberyCooldownTimer)
+    end
+end)
+
+RegisterServerEvent('mms-robbery:server:RobberyCooldown',function(RobberyCooldownTimer)
+    Citizen.Wait(500)
+    while RobberyCooldown do
+        Citizen.Wait(30000)
+        RobberyCooldownTimer = RobberyCooldownTimer - 30000
+        if RobberyCooldownTimer <= 0 then
+            RobberyCooldown = false
         end
     end
 end)
@@ -165,6 +187,22 @@ end)
 VORPcore.Callback.Register('mms-robbery:callback:CrackedOpenBanks', function(source,cb)
     local src = source
     return cb(AllBanks)
+end)
+
+VORPcore.Callback.Register('mms-robbery:callback:GetCooldownStatus', function(source,cb)
+    if RobberyCooldown then
+        return cb(true)
+    else
+        return cb(false)
+    end
+end)
+
+VORPcore.Callback.Register('mms-robbery:callback:GetCooldownStatusStore', function(source,cb)
+    if RobberyCooldown then
+        return cb(true)
+    else
+        return cb(false)
+    end
 end)
 
 VORPcore.Callback.Register('mms-robbery:callback:GetOnDutyPolice', function(source,cb)
