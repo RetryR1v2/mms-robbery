@@ -31,6 +31,7 @@ Config.synSociety = false -- If You Use SYN Society and go OnDuty in Syn
 Config.VorpDutySystem = true -- VORP DUtySystem
 Config.DLSociety = false -- DL Society
 Config.EZSociety = false -- EZ Society
+Config.BCCSociety = false -- BCC Society
 
 -- xsound Settings Stores
 Config.PlayAlarms = true

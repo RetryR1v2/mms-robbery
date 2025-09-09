@@ -75,6 +75,21 @@ RegisterServerEvent('mms-robbery:server:AlertPolice',function(CurrentLocation,Na
                 end
             end
         end
+    elseif Config.BCCSociety then
+        local BccSociety = exports['bcc-society']:getSocietyAPI()
+        for h,v in ipairs(GetPlayers()) do
+            local src = v
+            local Character = VORPcore.getUser(src).getUsedCharacter
+            local Job = Character.job
+            for h, jobDef in ipairs(Config.PoliceJobs) do
+                if jobDef.Job == Job then
+                    local DutyStatus = BccSociety.MiscAPI:CheckIfPlayerHasJobAndIsOnDuty(Job, src)
+                    if DutyStatus then
+                        TriggerClientEvent('mms-robbery:client:SendAlertToPolice', src, CurrentLocation, Name)
+                    end
+                end
+            end
+        end
     elseif Config.VorpDutySystem then
         for h,v in ipairs(GetPlayers()) do
             local DutyStatus = Player(v).state.isPoliceDuty
@@ -247,6 +262,21 @@ VORPcore.Callback.Register('mms-robbery:callback:GetOnDutyPolice', function(sour
                         if DutyStatus then
                             OnDutyPolice = OnDutyPolice + 1
                         end
+                    end
+                end
+            end
+        end
+    elseif Config.BCCSociety then
+        local BccSociety = exports['bcc-society']:getSocietyAPI()
+        for h,v in ipairs(GetPlayers()) do
+            local src = v
+            local Character = VORPcore.getUser(src).getUsedCharacter
+            local Job = Character.job
+            for h, jobDef in ipairs(Config.PoliceJobs) do
+                if jobDef.Job == Job then
+                    local DutyStatus = BccSociety.MiscAPI:CheckIfPlayerHasJobAndIsOnDuty(Job, src)
+                    if DutyStatus then
+                        OnDutyPolice = OnDutyPolice + 1
                     end
                 end
             end
