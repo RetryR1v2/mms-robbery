@@ -68,7 +68,7 @@ Citizen.CreateThread(function()
                                     if res then -- Lockpicking Success
                                         FreezeEntityPosition(PlayerPedId(),false)
                                         TriggerServerEvent('mms-robbery:server:AddLocationToAlreadyPicked',CurrentLocation)
-                                        TriggerServerEvent('mms-robbery:server:Reward',Reward,Type)
+                                        TriggerServerEvent('mms-robbery:server:Reward',Reward,Type,Name)
                                         if CurrentChance <= Chance and not PoliceAlerted then
                                             if not NPCPoliceSpawned then
                                                 TriggerEvent('mms-robbery:client:SpawnNpcPolice',SpawnNPCS,NPCLocations)
@@ -217,7 +217,7 @@ AddEventHandler('mms-robbery:client:CheckOpenBanks',function (CurrentLocation,Re
                                     FreezeEntityPosition(PlayerPedId(),false)
                                     print(v.Coord)
                                     TriggerServerEvent('mms-robbery:server:AddLocationToAlreadyPicked',v.Coord)
-                                    TriggerServerEvent('mms-robbery:server:Reward',Reward,Type)
+                                    TriggerServerEvent('mms-robbery:server:Reward',Reward,Type,Name)
                                 else -- Lockpicking Failed
                                     FreezeEntityPosition(PlayerPedId(),false)
                                     VORPcore.NotifyTip(_U('LockpickingFailed'), 5000)

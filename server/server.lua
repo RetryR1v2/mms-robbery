@@ -105,9 +105,10 @@ RegisterServerEvent('mms-robbery:server:DestroyLockpick',function(LockpickItem)
     exports.vorp_inventory:subItem(src, LockpickItem, 1)
 end)
 
-RegisterServerEvent('mms-robbery:server:Reward',function(Reward,Type)
+RegisterServerEvent('mms-robbery:server:Reward',function(Reward,Type,Name)
     local src = source
     local Character = VORPcore.getUser(src).getUsedCharacter
+    local RobberName = Character.firstname .. ' ' .. Character.lastname
     if Reward.Money then
         local Amount = math.random(Reward.MoneyMin,Reward.MoneyMax)
         Character.addCurrency(Reward.MoneyType,Amount)
@@ -127,6 +128,11 @@ RegisterServerEvent('mms-robbery:server:Reward',function(Reward,Type)
         local RobberyCooldownTimer = Config.RobberyCooldown * 60000
         RobberyCooldown = true
         TriggerEvent('mms-robbery:server:RobberyCooldown',RobberyCooldownTimer)
+    end
+    if Config.WebHook and Type == 'Bank' then
+        VORPcore.AddWebhook(Config.WHTitle, Config.WHLink, RobberName .. _U('WHRobbedBank') .. Name .. _U('WHAndRobbed') .. v.Amount .. ' ' .. v.ItemLabel, Config.WHColor, Config.WHName, Config.WHLogo, Config.WHFooterLogo, Config.WHAvatar)
+    elseif Config.WebHook and Type == 'Store' then
+        VORPcore.AddWebhook(Config.WHTitle, Config.WHLink, RobberName .. _U('WHRobbedStore') .. Name .. _U('WHAndRobbed') .. v.Amount .. ' ' .. v.ItemLabel , Config.WHColor, Config.WHName, Config.WHLogo, Config.WHFooterLogo, Config.WHAvatar)
     end
 end)
 

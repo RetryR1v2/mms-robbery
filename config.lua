@@ -4,12 +4,12 @@ Config.defaultlang = "de_lang"
 
 -- Webhook Settings
 
-Config.WebHook = true
+Config.WebHook = false
 
-Config.WHTitle = 'AFK System:'
+Config.WHTitle = 'Robbery:'
 Config.WHLink = ''  -- Discord WH link Here
 Config.WHColor = 16711680 -- red
-Config.WHName = 'AFK System:' -- name
+Config.WHName = 'Robbery:' -- name
 Config.WHLogo = '' -- must be 30x30px
 Config.WHFooterLogo = '' -- must be 30x30px
 Config.WHAvatar = '' -- must be 30x30px

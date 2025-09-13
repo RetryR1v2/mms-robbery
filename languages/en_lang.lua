@@ -12,4 +12,7 @@ Locales["en_lang"] = {
     LocationAlreadyBombed = 'The door has already been blown up!',
     NotEnoghCops = 'Not Enogh Cops. Cops Needed: ',
     CantRobCurrently = 'A Robbery was already done, Please Wait',
+    WHRobbedBank = ' robbed the Bank in: ',
+    WHRobbedStore = ' robbed the Store in: ',
+    WHAndRobbed = ' and recieved: ',
 }

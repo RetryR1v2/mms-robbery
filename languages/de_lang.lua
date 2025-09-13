@@ -12,4 +12,7 @@ Locales["de_lang"] = {
     LocationAlreadyBombed = 'Türe wurde bereits Aufgesprengt!',
     NotEnoghCops = 'Nicht genug Beamte im Dienst. Benötigt: ',
     CantRobCurrently = 'Es wurde bereits ein Raub Ausgeführt Bitte etwas Gedult',
+    WHRobbedBank = ' überfällt die Bank in: ',
+    WHRobbedStore = ' überfällt den Laden in: ',
+    WHAndRobbed = ' und erbeutet: ',
 }
