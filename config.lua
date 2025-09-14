@@ -32,12 +32,14 @@ Config.VorpDutySystem = true -- VORP DUtySystem
 Config.DLSociety = false -- DL Society
 Config.EZSociety = false -- EZ Society
 Config.BCCSociety = false -- BCC Society
+Config.SSPoliceJob = false -- SS-PoliceJob
 
 -- xsound Settings Stores
+Config.SyncSound = true -- if false only the robber hears the alarm und bombsound
 Config.PlayAlarms = true
 Config.Title = 'Alarm'
 Config.Volume = 0.2
-Config.EmbedLink = 'https://www.youtube.com/watch?v=gLu3NaQ5dkI' -- Embed Link
+Config.EmbedLink = 'https://www.youtube.com/watch?v=qrNZrr9lD7k' -- Embed Link
 Config.Radius = 250
 Config.AlarmDuration = 10 -- time in Secouns
 

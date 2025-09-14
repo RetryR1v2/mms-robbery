@@ -74,7 +74,11 @@ Citizen.CreateThread(function()
                                                 TriggerEvent('mms-robbery:client:SpawnNpcPolice',SpawnNPCS,NPCLocations)
                                             end
                                             if Config.PlayAlarms then
-                                                TriggerEvent('mms-robbery:client:PlaySound',CurrentLocation)
+                                                if Config.SyncSound then
+                                                    TriggerServerEvent('mms-robbery:server:PlaySound',CurrentLocation)
+                                                else
+                                                    TriggerEvent('mms-robbery:client:PlaySound',CurrentLocation)
+                                                end
                                             end
                                             TriggerEvent('mms-robbery:client:ResetAlert')
                                             TriggerServerEvent('mms-robbery:server:AlertPolice',CurrentLocation,Name)
@@ -90,7 +94,11 @@ Citizen.CreateThread(function()
                                                 TriggerEvent('mms-robbery:client:SpawnNpcPolice',SpawnNPCS,NPCLocations)
                                             end
                                             if Config.PlayAlarms then
-                                                TriggerEvent('mms-robbery:client:PlaySound',CurrentLocation)
+                                                if Config.SyncSound then
+                                                    TriggerServerEvent('mms-robbery:server:PlaySound',CurrentLocation)
+                                                else
+                                                    TriggerEvent('mms-robbery:client:PlaySound',CurrentLocation)
+                                                end
                                             end
                                             TriggerEvent('mms-robbery:client:ResetAlert')
                                             TriggerServerEvent('mms-robbery:server:AlertPolice',CurrentLocation,Name)
@@ -131,7 +139,11 @@ Citizen.CreateThread(function()
                                     local DynamiteObject = CreateObject(GetHashKey(Dynamite.Model),Dynamite.x,Dynamite.y,Dynamite.z,true,true,false)
                                     SetEntityRotation(DynamiteObject, Dynamite.pitch,Dynamite.roll,Dynamite.yaw )
                                     if Config.PlayAlarms then
-                                        TriggerEvent('mms-robbery:client:PlaySoundBomb',CurrentLocation)
+                                        if Config.SyncSound then
+                                            TriggerServerEvent('mms-robbery:server:PlaySoundBomb',CurrentLocation)
+                                        else
+                                            TriggerEvent('mms-robbery:client:PlaySoundBomb',CurrentLocation)
+                                        end
                                     end
                                     Citizen.Wait(Config.AlarmDurationBomb*1000)
                                     local explosionTag_id = 25
@@ -149,7 +161,11 @@ Citizen.CreateThread(function()
                                             TriggerEvent('mms-robbery:client:SpawnNpcPolice',SpawnNPCS,NPCLocations)
                                         end
                                         if Config.PlayAlarms then
-                                            TriggerEvent('mms-robbery:client:PlaySound',CurrentLocation)
+                                            if Config.SyncSound then
+                                                TriggerServerEvent('mms-robbery:server:PlaySound',CurrentLocation)
+                                            else
+                                                TriggerEvent('mms-robbery:client:PlaySound',CurrentLocation)
+                                            end
                                         end
                                         TriggerEvent('mms-robbery:client:ResetAlert')
                                         TriggerServerEvent('mms-robbery:server:AlertPolice',CurrentLocation,Name)

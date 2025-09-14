@@ -90,6 +90,13 @@ RegisterServerEvent('mms-robbery:server:AlertPolice',function(CurrentLocation,Na
                 end
             end
         end
+    elseif Config.SSPoliceJob then
+        local notify = "Robbery in Progress!"
+        local bliptype = 1366733613
+        local blipradius = 30.0
+        local blipname = "Robbery!"
+        local blipremove = 10
+        exports["SS-PoliceJob"]:PoliceAlert(CurrentLocation, notify, blipradius, bliptype, blipname, blipremove)
     elseif Config.VorpDutySystem then
         for h,v in ipairs(GetPlayers()) do
             local DutyStatus = Player(v).state.isPoliceDuty
@@ -168,6 +175,20 @@ RegisterServerEvent('mms-robbery:server:SetBankState',function(CurrentLocation)
             AllBanks[h].Cracked = true
         end
     end
+end)
+
+RegisterNetEvent('mms-robbery:server:PlaySound',function(CurrentLocation)
+    exports.xsound:PlayUrlPos(-1, Config.Title, Config.EmbedLink, Config.Volume, CurrentLocation, 0)
+    exports.xsound:Distance(-1, Config.Title,Config.Radius)
+    Citizen.Wait(Config.AlarmDuration*1000)
+    exports.xsound:Destroy(-1, Config.Title)
+end)
+
+RegisterServerEvent('mms-robbery:server:PlaySoundBomb',function(CurrentLocation)
+    exports.xsound:PlayUrlPos(-1, Config.TitleBomb, Config.EmbedLinkBomb, Config.VolumeBomb, CurrentLocation, 0)
+    exports.xsound:Distance(-1, Config.TitleBomb,Config.RadiusBomb)
+    Citizen.Wait(Config.AlarmDurationBomb*1000)
+    exports.xsound:Destroy(-1, Config.TitleBomb)
 end)
 
 -----------------------------------------------
@@ -287,6 +308,8 @@ VORPcore.Callback.Register('mms-robbery:callback:GetOnDutyPolice', function(sour
                 end
             end
         end
+    elseif Config.SSPoliceJob then
+        OnDutyPolice = exports["SS-PoliceJob"]:GetPoliceONDUTY()
     elseif Config.VorpDutySystem then
         for h,v in ipairs(GetPlayers()) do
             local DutyStatus = Player(v).state.isPoliceDuty
