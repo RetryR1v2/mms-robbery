@@ -74,7 +74,7 @@ Citizen.CreateThread(function()
                                                 TriggerEvent('mms-robbery:client:SpawnNpcPolice',SpawnNPCS,NPCLocations)
                                             end
                                             if Config.PlayAlarms then
-                                                TriggerEvent('mms-robbery:client:PlaySound',CurrentLocation)
+                                                TriggerServerEvent('mms-robbery:server:PlaySound',CurrentLocation)
                                             end
                                             TriggerEvent('mms-robbery:client:ResetAlert')
                                             TriggerServerEvent('mms-robbery:server:AlertPolice',CurrentLocation,Name)
@@ -90,7 +90,7 @@ Citizen.CreateThread(function()
                                                 TriggerEvent('mms-robbery:client:SpawnNpcPolice',SpawnNPCS,NPCLocations)
                                             end
                                             if Config.PlayAlarms then
-                                                TriggerEvent('mms-robbery:client:PlaySound',CurrentLocation)
+                                                TriggerServerEvent('mms-robbery:server:PlaySound',CurrentLocation)
                                             end
                                             TriggerEvent('mms-robbery:client:ResetAlert')
                                             TriggerServerEvent('mms-robbery:server:AlertPolice',CurrentLocation,Name)
@@ -131,16 +131,8 @@ Citizen.CreateThread(function()
                                     local DynamiteObject = CreateObject(GetHashKey(Dynamite.Model),Dynamite.x,Dynamite.y,Dynamite.z,true,true,false)
                                     SetEntityRotation(DynamiteObject, Dynamite.pitch,Dynamite.roll,Dynamite.yaw )
                                     if Config.PlayAlarms then
-                                        TriggerEvent('mms-robbery:client:PlaySoundBomb',CurrentLocation)
+                                        TriggerServerEvent('mms-robbery:server:PlaySoundBomb',CurrentLocation,Dynamite)
                                     end
-                                    Citizen.Wait(Config.AlarmDurationBomb*1000)
-                                    local explosionTag_id = 25
-         	                        local explosion_vfxTag_hash = 0xD06E43B6
-                                    local damageScale = 1.0
-                         	        local isAudible = true
-                                    local isInvisible = false
-                                    local cameraShake = true
-                                    Citizen.InvokeNative(0x53BA259F3A67A99E, Dynamite.x,Dynamite.y,Dynamite.z, explosionTag_id, explosion_vfxTag_hash, damageScale, isAudible, isInvisible, cameraShake)
                                     TriggerServerEvent('mms-robbery:server:AddLocationToAlreadyBombed',CurrentLocation)
                                     TriggerServerEvent('mms-robbery:server:SetDoorState',Door)
                                     TriggerServerEvent('mms-robbery:server:SetBankState',CurrentLocation)
@@ -149,7 +141,7 @@ Citizen.CreateThread(function()
                                             TriggerEvent('mms-robbery:client:SpawnNpcPolice',SpawnNPCS,NPCLocations)
                                         end
                                         if Config.PlayAlarms then
-                                            TriggerEvent('mms-robbery:client:PlaySound',CurrentLocation)
+                                            TriggerServerEvent('mms-robbery:server:PlaySound',CurrentLocation)
                                         end
                                         TriggerEvent('mms-robbery:client:ResetAlert')
                                         TriggerServerEvent('mms-robbery:server:AlertPolice',CurrentLocation,Name)
@@ -160,7 +152,7 @@ Citizen.CreateThread(function()
                                 else
                                     VORPcore.NotifyRightTip(_U('NoDynamite'))
                                 end
-                            elseif LocationAlreadyRobbed then
+                            elseif LocationAlreadyBombed then
                                 VORPcore.NotifyRightTip(_U('LocationAlreadyBombed'))
                             elseif not CanStartRobbery then
                                 VORPcore.NotifyRightTip(_U('NotEnoghCops') .. OnDutyCopsNeeded)
@@ -215,7 +207,6 @@ AddEventHandler('mms-robbery:client:CheckOpenBanks',function (CurrentLocation,Re
                                 local res = exports["qadr-safe"]:createSafe(Safe)
                                 if res then -- Lockpicking Success
                                     FreezeEntityPosition(PlayerPedId(),false)
-                                    print(v.Coord)
                                     TriggerServerEvent('mms-robbery:server:AddLocationToAlreadyPicked',v.Coord)
                                     TriggerServerEvent('mms-robbery:server:Reward',Reward,Type,Name)
                                 else -- Lockpicking Failed
@@ -311,6 +302,18 @@ RegisterNetEvent('mms-robbery:client:PlaySoundBomb',function(CurrentLocation)
     Citizen.Wait(Config.AlarmDurationBomb*1000)
     xSound:Destroy(Config.TitleBomb)
 end)
+
+RegisterNetEvent('mms-robbery:client:PlayBombFXSynced',function(Dynamite)
+    Citizen.Wait(Config.AlarmDurationBomb*1000)
+    local explosionTag_id = 25
+    local explosion_vfxTag_hash = 0xD06E43B6
+    local damageScale = 1.0
+    local isAudible = true
+    local isInvisible = false
+    local cameraShake = true
+    Citizen.InvokeNative(0x53BA259F3A67A99E, Dynamite.x,Dynamite.y,Dynamite.z, explosionTag_id, explosion_vfxTag_hash, damageScale, isAudible, isInvisible, cameraShake)
+end)
+
 
 RegisterNetEvent('mms-robbery:client:ResetAlert',function()
     PoliceAlerted = true

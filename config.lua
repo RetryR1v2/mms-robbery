@@ -32,12 +32,13 @@ Config.VorpDutySystem = true -- VORP DUtySystem
 Config.DLSociety = false -- DL Society
 Config.EZSociety = false -- EZ Society
 Config.BCCSociety = false -- BCC Society
+Config.SSPoliceJob = false -- SSPolice
 
 -- xsound Settings Stores
 Config.PlayAlarms = true
 Config.Title = 'Alarm'
 Config.Volume = 0.2
-Config.EmbedLink = 'https://www.youtube.com/watch?v=gLu3NaQ5dkI' -- Embed Link
+Config.EmbedLink = 'https://www.youtube.com/watch?v=qrNZrr9lD7k' -- Embed Link
 Config.Radius = 250
 Config.AlarmDuration = 10 -- time in Secouns
 
@@ -81,7 +82,7 @@ Config.RobberyLocations = {
                 { ItemName = 'diamond', Amount = 1, ItemLabel = 'Diamant'},
             }
         },
-        OnDutyCopsNeeded = 1,
+        OnDutyCopsNeeded = 0,
         SpawnNpcsCops = true,
         NPCCopLocations = {
             { Coord = vector3(-804.18, -1291.56, 43.59) },
@@ -113,7 +114,7 @@ Config.RobberyLocations = {
                 { ItemName = 'diamond', Amount = 1, ItemLabel = 'Diamant'},
             }
         },
-        OnDutyCopsNeeded = 1,
+        OnDutyCopsNeeded = 0,
         SpawnNpcsCops = true,
         NPCCopLocations = {
             { Coord = vector3(-328.76, 799.37, 117.6) },
@@ -145,7 +146,7 @@ Config.RobberyLocations = {
                 { ItemName = 'diamond', Amount = 1, ItemLabel = 'Diamant'},
             }
         },
-        OnDutyCopsNeeded = 1,
+        OnDutyCopsNeeded = 0,
         SpawnNpcsCops = true,
         NPCCopLocations = {
             { Coord = vector3(-328.76, 799.37, 117.6) },
@@ -177,7 +178,7 @@ Config.RobberyLocations = {
                 { ItemName = 'diamond', Amount = 1, ItemLabel = 'Diamant'},
             }
         },
-        OnDutyCopsNeeded = 1,
+        OnDutyCopsNeeded = 0,
         SpawnNpcsCops = true,
         NPCCopLocations = {
             { Coord = vector3(1313.85, -1292.97, 75.92) },
@@ -209,7 +210,7 @@ Config.RobberyLocations = {
                 { ItemName = 'diamond', Amount = 1, ItemLabel = 'Diamant'},
             }
         },
-        OnDutyCopsNeeded = 1,
+        OnDutyCopsNeeded = 0,
         SpawnNpcsCops = true,
         NPCCopLocations = {
             { Coord = vector3(1313.85, -1292.97, 75.92) },
@@ -241,7 +242,7 @@ Config.RobberyLocations = {
                 { ItemName = 'diamond', Amount = 1, ItemLabel = 'Diamant'},
             }
         },
-        OnDutyCopsNeeded = 1,
+        OnDutyCopsNeeded = 0,
         SpawnNpcsCops = true,
         NPCCopLocations = {
             { Coord = vector3(2934.33, 1310.82, 44.63) },
@@ -273,7 +274,7 @@ Config.RobberyLocations = {
                 { ItemName = 'diamond', Amount = 1, ItemLabel = 'Diamant'},
             }
         },
-        OnDutyCopsNeeded = 1,
+        OnDutyCopsNeeded = 0,
         SpawnNpcsCops = true,
         NPCCopLocations = {
             { Coord = vector3(2820.72, -1299.02, 46.9) },
@@ -305,7 +306,7 @@ Config.RobberyLocations = {
                 { ItemName = 'diamond', Amount = 1, ItemLabel = 'Diamant'},
             }
         },
-        OnDutyCopsNeeded = 1,
+        OnDutyCopsNeeded = 0,
         SpawnNpcsCops = true,
         NPCCopLocations = {
             { Coord = vector3(2736.38, -1268.67, 49.65) },
@@ -345,7 +346,7 @@ Config.RobberyLocations = {
                 { ItemName = 'diamond', Amount = 1, ItemLabel = 'Diamant'},
             }
         },
-        OnDutyCopsNeeded = 1,
+        OnDutyCopsNeeded = 0,
         SpawnNpcsCops = true,
         NPCCopLocations = {
             { Coord = vector3(-807.1, -1276.58, 43.78)  },
@@ -384,7 +385,7 @@ Config.RobberyLocations = {
                 { ItemName = 'diamond', Amount = 1, ItemLabel = 'Diamant'},
             }
         },
-        OnDutyCopsNeeded = 1,
+        OnDutyCopsNeeded = 0,
         SpawnNpcsCops = true,
         NPCCopLocations = {
             { Coord = vector3(-328.76, 799.37, 117.6) },
@@ -423,7 +424,7 @@ Config.RobberyLocations = {
                 { ItemName = 'diamond', Amount = 1, ItemLabel = 'Diamant'},
             }
         },
-        OnDutyCopsNeeded = 1,
+        OnDutyCopsNeeded = 0,
         SpawnNpcsCops = true,
         NPCCopLocations = {
             { Coord = vector3(1313.85, -1292.97, 75.92) },
@@ -462,7 +463,7 @@ Config.RobberyLocations = {
                 { ItemName = 'diamond', Amount = 1, ItemLabel = 'Diamant'},
             }
         },
-        OnDutyCopsNeeded = 1,
+        OnDutyCopsNeeded = 0,
         SpawnNpcsCops = true,
         NPCCopLocations = {
             { Coord = vector3(2643.46, -1312.24, 51.12) },
