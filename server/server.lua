@@ -123,7 +123,7 @@ RegisterServerEvent('mms-robbery:server:Reward',function(Reward,Type,Name)
         if Config.WebHook and Type == 'Bank' then
             VORPcore.AddWebhook(Config.WHTitle, Config.WHLink, RobberName .. _U('WHRobbedBank') .. Name .. _U('WHAndRobbed') .. Amount .. ' $', Config.WHColor, Config.WHName, Config.WHLogo, Config.WHFooterLogo, Config.WHAvatar)
         elseif Config.WebHook and Type == 'Store' then
-            ORPcore.AddWebhook(Config.WHTitle, Config.WHLink, RobberName .. _U('WHRobbedStore') .. Name .. _U('WHAndRobbed') .. Amount .. ' $', Config.WHColor, Config.WHName, Config.WHLogo, Config.WHFooterLogo, Config.WHAvatar)
+            VORPcore.AddWebhook(Config.WHTitle, Config.WHLink, RobberName .. _U('WHRobbedStore') .. Name .. _U('WHAndRobbed') .. Amount .. ' $', Config.WHColor, Config.WHName, Config.WHLogo, Config.WHFooterLogo, Config.WHAvatar)
         end
     end
     if Reward.Item then
