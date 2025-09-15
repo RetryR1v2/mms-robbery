@@ -24,7 +24,9 @@
 - 1.1.6 Synced Sounds
 - Synced BombFX and Damage
 - Added SS-Police Support
-- Fixed Little Bomb Error   
+- Fixed Little Bomb Error
+- 1.1.7 Fixed Webhook Error
+- Added Chance to Destroy Lockpick on Success
 
 # installation 
 

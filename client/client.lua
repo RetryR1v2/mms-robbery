@@ -66,6 +66,12 @@ Citizen.CreateThread(function()
                                     FreezeEntityPosition(PlayerPedId(),true)
                                     local res = exports["qadr-safe"]:createSafe(Safe)
                                     if res then -- Lockpicking Success
+                                        if Config.DestroyLockpickOnSuccess then
+                                            local Chance = math.random(1,100)
+                                            if Chance <= Config.DestroyLockpickChance then
+                                                TriggerServerEvent('mms-robbery:server:DestroyLockpick',LockpickItem)
+                                            end
+                                        end
                                         FreezeEntityPosition(PlayerPedId(),false)
                                         TriggerServerEvent('mms-robbery:server:AddLocationToAlreadyPicked',CurrentLocation)
                                         TriggerServerEvent('mms-robbery:server:Reward',Reward,Type,Name)
@@ -206,6 +212,12 @@ AddEventHandler('mms-robbery:client:CheckOpenBanks',function (CurrentLocation,Re
                                 FreezeEntityPosition(PlayerPedId(),true)
                                 local res = exports["qadr-safe"]:createSafe(Safe)
                                 if res then -- Lockpicking Success
+                                    if Config.DestroyLockpickOnSuccess then
+                                        local Chance = math.random(1,100)
+                                        if Chance <= Config.DestroyLockpickChance then
+                                            TriggerServerEvent('mms-robbery:server:DestroyLockpick',LockpickItem)
+                                        end
+                                    end
                                     FreezeEntityPosition(PlayerPedId(),false)
                                     TriggerServerEvent('mms-robbery:server:AddLocationToAlreadyPicked',v.Coord)
                                     TriggerServerEvent('mms-robbery:server:Reward',Reward,Type,Name)

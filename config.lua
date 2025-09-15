@@ -48,6 +48,11 @@ Config.EmbedLinkBomb = 'https://www.youtube.com/watch?v=_u__1jsSeBc'
 Config.VolumeBomb = 0.5
 Config.AlarmDurationBomb = 10
 
+-- Lockpick Settings
+
+Config.DestroyLockpickOnSuccess = true
+Config.DestroyLockpickChance = 50 -- Chance in % to Loose Lockpick on Success
+
 Config.DestroyLockpickOnFail = true
 
 Config.PoliceJobs = {
