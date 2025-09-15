@@ -120,6 +120,11 @@ RegisterServerEvent('mms-robbery:server:Reward',function(Reward,Type,Name)
         local Amount = math.random(Reward.MoneyMin,Reward.MoneyMax)
         Character.addCurrency(Reward.MoneyType,Amount)
         VORPcore.NotifyRightTip(src,_U('RewardedMoney') .. Amount .. ' $',5000)
+        if Config.WebHook and Type == 'Bank' then
+            VORPcore.AddWebhook(Config.WHTitle, Config.WHLink, RobberName .. _U('WHRobbedBank') .. Name .. _U('WHAndRobbed') .. Amount .. ' $', Config.WHColor, Config.WHName, Config.WHLogo, Config.WHFooterLogo, Config.WHAvatar)
+        elseif Config.WebHook and Type == 'Store' then
+            ORPcore.AddWebhook(Config.WHTitle, Config.WHLink, RobberName .. _U('WHRobbedStore') .. Name .. _U('WHAndRobbed') .. Amount .. ' $', Config.WHColor, Config.WHName, Config.WHLogo, Config.WHFooterLogo, Config.WHAvatar)
+        end
     end
     if Reward.Item then
         for h,v in ipairs(Reward.Items) do
@@ -137,9 +142,9 @@ RegisterServerEvent('mms-robbery:server:Reward',function(Reward,Type,Name)
         TriggerEvent('mms-robbery:server:RobberyCooldown',RobberyCooldownTimer)
     end
     if Config.WebHook and Type == 'Bank' then
-        VORPcore.AddWebhook(Config.WHTitle, Config.WHLink, RobberName .. _U('WHRobbedBank') .. Name .. _U('WHAndRobbed') .. v.Amount .. ' ' .. v.ItemLabel, Config.WHColor, Config.WHName, Config.WHLogo, Config.WHFooterLogo, Config.WHAvatar)
+        VORPcore.AddWebhook(Config.WHTitle, Config.WHLink, RobberName .. _U('WHRobbedBank') .. Name, Config.WHColor, Config.WHName, Config.WHLogo, Config.WHFooterLogo, Config.WHAvatar)
     elseif Config.WebHook and Type == 'Store' then
-        VORPcore.AddWebhook(Config.WHTitle, Config.WHLink, RobberName .. _U('WHRobbedStore') .. Name .. _U('WHAndRobbed') .. v.Amount .. ' ' .. v.ItemLabel , Config.WHColor, Config.WHName, Config.WHLogo, Config.WHFooterLogo, Config.WHAvatar)
+        VORPcore.AddWebhook(Config.WHTitle, Config.WHLink, RobberName .. _U('WHRobbedStore') .. Name, Config.WHColor, Config.WHName, Config.WHLogo, Config.WHFooterLogo, Config.WHAvatar)
     end
 end)
 
