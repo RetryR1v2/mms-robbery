@@ -6,6 +6,7 @@ local AlreadyBombedCoords = {}
 local AllBanks = {}
 
 local RobberyCooldown = false
+local RobberyCooldownStarted = false
 
 Citizen.CreateThread(function()
     local Timer = Config.ResetAllLocationsTime * 60000
@@ -134,12 +135,16 @@ RegisterServerEvent('mms-robbery:server:Reward',function(Reward,Type,Name)
     end
     if Type == 'Bank' and not RobberyCooldown then
         local RobberyCooldownTimer = Config.BankCooldown * 60000
-        RobberyCooldown = true
-        TriggerEvent('mms-robbery:server:RobberyCooldown',RobberyCooldownTimer)
+        if not RobberyCooldownStarted then
+            RobberyCooldownStarted = true
+            TriggerEvent('mms-robbery:server:RobberyCooldown',RobberyCooldownTimer)
+        end
     elseif Type == 'Store' and not RobberyCooldown then
         local RobberyCooldownTimer = Config.RobberyCooldown * 60000
-        RobberyCooldown = true
-        TriggerEvent('mms-robbery:server:RobberyCooldown',RobberyCooldownTimer)
+        if not RobberyCooldownStarted then
+            RobberyCooldownStarted = true
+            TriggerEvent('mms-robbery:server:RobberyCooldown',RobberyCooldownTimer)
+        end
     end
     if Config.WebHook and Type == 'Bank' then
         VORPcore.AddWebhook(Config.WHTitle, Config.WHLink, RobberName .. _U('WHRobbedBank') .. Name, Config.WHColor, Config.WHName, Config.WHLogo, Config.WHFooterLogo, Config.WHAvatar)
@@ -149,12 +154,14 @@ RegisterServerEvent('mms-robbery:server:Reward',function(Reward,Type,Name)
 end)
 
 RegisterServerEvent('mms-robbery:server:RobberyCooldown',function(RobberyCooldownTimer)
-    Citizen.Wait(500)
+    Citizen.Wait(300000)
+    RobberyCooldown = true
     while RobberyCooldown do
         Citizen.Wait(30000)
         RobberyCooldownTimer = RobberyCooldownTimer - 30000
         if RobberyCooldownTimer <= 0 then
             RobberyCooldown = false
+            RobberyCooldownStarted = false
         end
     end
 end)
