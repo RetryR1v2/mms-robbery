@@ -11,7 +11,7 @@ Citizen.CreateThread(function()
         if #AlreadyRobbedCoords > 0 then
             for h,v in ipairs(AlreadyRobbedCoords) do
                 v.Cooldown = v.Cooldown - 10000
-                print(v.Cooldown)
+                -- print(v.Cooldown)
                 if v.Cooldown <= 0 then
                     table.remove(AlreadyRobbedCoords, h)
                 end
@@ -20,7 +20,7 @@ Citizen.CreateThread(function()
         if #AlreadyBombedCoords > 0 then
             for h,v in ipairs(AlreadyBombedCoords) do
                 v.Cooldown = v.Cooldown - 10000
-                print(v.Cooldown)
+                -- print(v.Cooldown)
                 if v.Cooldown <= 0 then
                     local Door = v.Door
                     for h,v in ipairs(GetPlayers()) do
