@@ -34,12 +34,12 @@ Citizen.CreateThread(function()
 end)
 
 RegisterServerEvent('mms-robbery:server:AddLocationToAlreadyPicked',function(CurrentLocation,CooldownInMin)
-    RobbedData = { Coords = CurrentLocation , Cooldown = CooldownInMin, IsRobbed = true}
+    local RobbedData = { Coords = CurrentLocation , Cooldown = CooldownInMin, IsRobbed = true}
     table.insert(AlreadyRobbedCoords,RobbedData)
 end)
 
 RegisterServerEvent('mms-robbery:server:AddLocationToAlreadyBombed',function(CurrentLocation,CooldownInMin,Door)
-    RobbedData = { Coords = CurrentLocation , Cooldown = CooldownInMin, IsRobbed = true, Door = Door}
+    local RobbedData = { Coords = CurrentLocation , Cooldown = CooldownInMin, IsRobbed = true, Door = Door}
     table.insert(AlreadyBombedCoords,RobbedData)
 end)
 
