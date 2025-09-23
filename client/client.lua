@@ -38,16 +38,16 @@ Citizen.CreateThread(function()
             for h,v in ipairs(v.Locations) do
                 local CurrentLocation = v.Coord
                 local dist = #(MyCoords - v.Coord)
+                local CooldownInMin = v.Cooldown * 60000
                 if dist < 1.5 then
                     if Type == 'Store' then
                         StoreGroup:ShowGroup(Name)
 
                         if LockpickPrompt:HasCompleted() then
-                            local CooldownStatus = VORPcore.Callback.TriggerAwait('mms-robbery:callback:GetCooldownStatus')
                             local PickedLocations = VORPcore.Callback.TriggerAwait('mms-robbery:callback:PickedLocations')
-                            if #PickedLocations >   0 then
+                            if #PickedLocations > 0 then
                                 for h,v in ipairs(PickedLocations) do
-                                    if v == CurrentLocation then
+                                    if v.Coords == CurrentLocation and v.IsRobbed then
                                         LocationAlreadyRobbed = true
                                     end
                                 end
@@ -58,7 +58,7 @@ Citizen.CreateThread(function()
                             else
                                 CanStartRobbery = false
                             end
-                            if not LocationAlreadyRobbed and CanStartRobbery and not CooldownStatus then
+                            if not LocationAlreadyRobbed and CanStartRobbery then
                                 TriggerEvent('mms-robbery:client:InRobberyProgress',CurrentLocation)
                                 local CurrentChance = math.random(1,100)
                                 local HasLockpick = VORPcore.Callback.TriggerAwait('mms-robbery:callback:CheckForLockpick',LockpickItem)
@@ -73,7 +73,7 @@ Citizen.CreateThread(function()
                                             end
                                         end
                                         FreezeEntityPosition(PlayerPedId(),false)
-                                        TriggerServerEvent('mms-robbery:server:AddLocationToAlreadyPicked',CurrentLocation)
+                                        TriggerServerEvent('mms-robbery:server:AddLocationToAlreadyPicked',CurrentLocation,CooldownInMin)
                                         TriggerServerEvent('mms-robbery:server:Reward',Reward,Type,Name)
                                         if CurrentChance <= Chance and not PoliceAlerted then
                                             if not NPCPoliceSpawned then
@@ -83,7 +83,9 @@ Citizen.CreateThread(function()
                                                 TriggerServerEvent('mms-robbery:server:PlaySound',CurrentLocation)
                                             end
                                             TriggerEvent('mms-robbery:client:ResetAlert')
-                                            TriggerServerEvent('mms-robbery:server:AlertPolice',CurrentLocation,Name)
+                                            if Config.UseAlertSystem then
+                                                TriggerServerEvent('mms-robbery:server:AlertPolice',CurrentLocation,Name)
+                                            end
                                         end
                                     else -- Lockpicking Failed
                                         FreezeEntityPosition(PlayerPedId(),false)
@@ -99,7 +101,9 @@ Citizen.CreateThread(function()
                                                 TriggerServerEvent('mms-robbery:server:PlaySound',CurrentLocation)
                                             end
                                             TriggerEvent('mms-robbery:client:ResetAlert')
-                                            TriggerServerEvent('mms-robbery:server:AlertPolice',CurrentLocation,Name)
+                                            if Config.UseAlertSystem then
+                                                TriggerServerEvent('mms-robbery:server:AlertPolice',CurrentLocation,Name)
+                                            end
                                         end
                                     end
                                 else
@@ -116,11 +120,10 @@ Citizen.CreateThread(function()
                     elseif Type == 'Bank' then
                         BankGroup1:ShowGroup(Name)
                         if DynamitePromp:HasCompleted() then
-                            local CooldownStatus = VORPcore.Callback.TriggerAwait('mms-robbery:callback:GetCooldownStatus')
                             local BombedLocations = VORPcore.Callback.TriggerAwait('mms-robbery:callback:BombedLocations')
                             if #BombedLocations >   0 then
                                 for h,v in ipairs(BombedLocations) do
-                                    if v == CurrentLocation then
+                                    if v.Coords == CurrentLocation and v.IsRobbed then
                                         LocationAlreadyBombed = true
                                     end
                                 end
@@ -131,7 +134,7 @@ Citizen.CreateThread(function()
                             else
                                 CanStartRobbery = false
                             end
-                            if not LocationAlreadyBombed and CanStartRobbery and not CooldownStatus then
+                            if not LocationAlreadyBombed and CanStartRobbery then
                                 local HasDynamite = VORPcore.Callback.TriggerAwait('mms-robbery:callback:CheckForDynamite',DynamiteItem)
                                 if HasDynamite then
                                     local DynamiteObject = CreateObject(GetHashKey(Dynamite.Model),Dynamite.x,Dynamite.y,Dynamite.z,true,true,false)
@@ -139,7 +142,7 @@ Citizen.CreateThread(function()
                                     if Config.PlayAlarms then
                                         TriggerServerEvent('mms-robbery:server:PlaySoundBomb',CurrentLocation,Dynamite)
                                     end
-                                    TriggerServerEvent('mms-robbery:server:AddLocationToAlreadyBombed',CurrentLocation)
+                                    TriggerServerEvent('mms-robbery:server:AddLocationToAlreadyBombed',CurrentLocation,CooldownInMin,Door)
                                     TriggerServerEvent('mms-robbery:server:SetDoorState',Door)
                                     TriggerServerEvent('mms-robbery:server:SetBankState',CurrentLocation)
                                     if not PoliceAlerted then
@@ -150,7 +153,9 @@ Citizen.CreateThread(function()
                                             TriggerServerEvent('mms-robbery:server:PlaySound',CurrentLocation)
                                         end
                                         TriggerEvent('mms-robbery:client:ResetAlert')
-                                        TriggerServerEvent('mms-robbery:server:AlertPolice',CurrentLocation,Name)
+                                        if Config.UseAlertSystem then
+                                            TriggerServerEvent('mms-robbery:server:AlertPolice',CurrentLocation,Name)
+                                        end
                                     end
                                     DeleteEntity(DynamiteObject)
                                     Citizen.Wait(2500)
@@ -162,8 +167,6 @@ Citizen.CreateThread(function()
                                 VORPcore.NotifyRightTip(_U('LocationAlreadyBombed'))
                             elseif not CanStartRobbery then
                                 VORPcore.NotifyRightTip(_U('NotEnoghCops') .. OnDutyCopsNeeded)
-                            elseif CooldownStatus then
-                                VORPcore.NotifyRightTip(_U('CantRobCurrently'))
                             end
                         end
                     end
@@ -192,7 +195,7 @@ AddEventHandler('mms-robbery:client:CheckOpenBanks',function (CurrentLocation,Re
                     local PickedLocations = VORPcore.Callback.TriggerAwait('mms-robbery:callback:PickedLocations')
                     if #PickedLocations > 0 then
                         for h,v in ipairs(PickedLocations) do
-                            if v == Coords then
+                            if v.Coords == CurrentLocation and v.IsRobbed then
                                 LocationAlreadyRobbed = true
                             end
                         end
@@ -443,13 +446,9 @@ CreateThread(function()
 end)
 
 RegisterNetEvent('mms-robbery:client:ResetDoors')
-AddEventHandler('mms-robbery:client:ResetDoors',function()
-    for h, v in pairs(Config.RobberyLocations) do
-        if v.VaultDoor and v.State ~= nil then
-            if not IsDoorRegisteredWithSystem(v.VaultDoor) then
-                Citizen.InvokeNative(0xD99229FE93B46286, v.VaultDoor, 1, 1, 0, 0, 0, 0)
-            end
-            DoorSystemSetDoorState(v.VaultDoor, v.State)
-        end
+AddEventHandler('mms-robbery:client:ResetDoors',function(Door)
+    if not IsDoorRegisteredWithSystem(Door) then
+        Citizen.InvokeNative(0xD99229FE93B46286, Door, 1, 1, 0, 0, 0, 0)
     end
+    DoorSystemSetDoorState(Door, 1)
 end)

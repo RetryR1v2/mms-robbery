@@ -27,6 +27,12 @@
 - Fixed Little Bomb Error
 - 1.1.7 Fixed Webhook Error
 - Added Chance to Destroy Lockpick on Success
+- 1.1.8 Reworked Cooldown System.
+- Every Robbery and Dynamte has its own Cooldown now.
+- Added LuckyItem Support
+- Replace all Files Config Changed
+- Added Config.UseAlertSystem set to false if you will only use the sound to alert police around.
+- this removes the OnDuty Alerts
 
 # installation 
 

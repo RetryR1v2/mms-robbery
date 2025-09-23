@@ -15,4 +15,5 @@ Locales["de_lang"] = {
     WHRobbedBank = ' überfällt die Bank in: ',
     WHRobbedStore = ' überfällt den Laden in: ',
     WHAndRobbed = ' und erbeutet: ',
+    PocketFullCantCarry = 'Kein Platz für: ',
 }

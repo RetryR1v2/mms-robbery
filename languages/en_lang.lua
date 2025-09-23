@@ -15,4 +15,5 @@ Locales["en_lang"] = {
     WHRobbedBank = ' robbed the Bank in: ',
     WHRobbedStore = ' robbed the Store in: ',
     WHAndRobbed = ' and recieved: ',
+    PocketFullCantCarry = 'Cant Carry: ',
 }

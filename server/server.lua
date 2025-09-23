@@ -5,32 +5,42 @@ local AlreadyRobbedCoords = {}
 local AlreadyBombedCoords = {}
 local AllBanks = {}
 
-local RobberyCooldown = false
-local RobberyCooldownStarted = false
-
 Citizen.CreateThread(function()
-    local Timer = Config.ResetAllLocationsTime * 60000
     while true do
-        Citizen.Wait(60000)
-        Timer = Timer - 60000
-        if Timer <= 0 then
-            AlreadyRobbedCoords = {}
-            AlreadyBombedCoords = {}
-            AllBanks = {}
-            for h,v in ipairs(GetPlayers()) do
-                TriggerClientEvent('mms-robbery:client:ResetDoors',v)
+        Citizen.Wait(10000)
+        if #AlreadyRobbedCoords > 0 then
+            for h,v in ipairs(AlreadyRobbedCoords) do
+                v.Cooldown = v.Cooldown - 10000
+                print(v.Cooldown)
+                if v.Cooldown <= 0 then
+                    table.remove(AlreadyRobbedCoords, h)
+                end
             end
-            Timer = Config.ResetAllLocationsTime * 60000
+        end
+        if #AlreadyBombedCoords > 0 then
+            for h,v in ipairs(AlreadyBombedCoords) do
+                v.Cooldown = v.Cooldown - 10000
+                print(v.Cooldown)
+                if v.Cooldown <= 0 then
+                    local Door = v.Door
+                    for h,v in ipairs(GetPlayers()) do
+                        TriggerClientEvent('mms-robbery:client:ResetDoors',v,Door)
+                    end
+                    table.remove(AlreadyBombedCoords, h)
+                end
+            end
         end
     end
 end)
 
-RegisterServerEvent('mms-robbery:server:AddLocationToAlreadyPicked',function(CurrentLocation)
-    table.insert(AlreadyRobbedCoords,CurrentLocation)
+RegisterServerEvent('mms-robbery:server:AddLocationToAlreadyPicked',function(CurrentLocation,CooldownInMin)
+    RobbedData = { Coords = CurrentLocation , Cooldown = CooldownInMin, IsRobbed = true}
+    table.insert(AlreadyRobbedCoords,RobbedData)
 end)
 
-RegisterServerEvent('mms-robbery:server:AddLocationToAlreadyBombed',function(CurrentLocation)
-    table.insert(AlreadyBombedCoords,CurrentLocation)
+RegisterServerEvent('mms-robbery:server:AddLocationToAlreadyBombed',function(CurrentLocation,CooldownInMin,Door)
+    RobbedData = { Coords = CurrentLocation , Cooldown = CooldownInMin, IsRobbed = true, Door = Door}
+    table.insert(AlreadyBombedCoords,RobbedData)
 end)
 
 RegisterServerEvent('mms-robbery:server:AlertPolice',function(CurrentLocation,Name)
@@ -129,21 +139,30 @@ RegisterServerEvent('mms-robbery:server:Reward',function(Reward,Type,Name)
     end
     if Reward.Item then
         for h,v in ipairs(Reward.Items) do
-            exports.vorp_inventory:addItem(src, v.ItemName, v.Amount)
-            VORPcore.NotifyRightTip(src,_U('RewardItem') .. v.Amount .. ' ' .. v.ItemLabel,5000)
+            local CanCarry = exports.vorp_inventory:canCarryItem(src, v.ItemName, v.Amount)
+            if CanCarry then
+                exports.vorp_inventory:addItem(src, v.ItemName, v.Amount)
+                VORPcore.NotifyRightTip(src,_U('RewardItem') .. v.Amount .. ' ' .. v.ItemLabel,5000)
+            else
+                VORPcore.NotifyRightTip(src,_U('PocketFullCantCarry') .. v.Amount .. ' ' .. v.ItemLabel,5000)
+            end
         end
     end
-    if Type == 'Bank' and not RobberyCooldown then
-        local RobberyCooldownTimer = Config.BankCooldown * 60000
-        if not RobberyCooldownStarted then
-            RobberyCooldownStarted = true
-            TriggerEvent('mms-robbery:server:RobberyCooldown',RobberyCooldownTimer)
+    if Reward.LuckyItem then
+        local GetItem = false
+        local Chance = math.random(1,100)
+        if Chance <= Reward.LuckyItemChance then
+            GetItem = true
         end
-    elseif Type == 'Store' and not RobberyCooldown then
-        local RobberyCooldownTimer = Config.RobberyCooldown * 60000
-        if not RobberyCooldownStarted then
-            RobberyCooldownStarted = true
-            TriggerEvent('mms-robbery:server:RobberyCooldown',RobberyCooldownTimer)
+        local MaxIndex = #Reward.LuckyItems
+        local RandomIndex = math.random(1,MaxIndex)
+        local Item = Reward.LuckyItems[RandomIndex]
+        local CanCarry = exports.vorp_inventory:canCarryItem(src, v.ItemName, v.Amount)
+        if CanCarry and GetItem then
+            exports.vorp_inventory:addItem(src, Item.ItemName, Item.Amount)
+            VORPcore.NotifyRightTip(src,_U('RewardItem') .. Item.Amount .. ' ' .. Item.ItemLabel,5000)
+        else
+            VORPcore.NotifyRightTip(src,_U('PocketFullCantCarry') .. Item.Amount .. ' ' .. Item.ItemLabel,5000)
         end
     end
     if Config.WebHook and Type == 'Bank' then
@@ -153,18 +172,6 @@ RegisterServerEvent('mms-robbery:server:Reward',function(Reward,Type,Name)
     end
 end)
 
-RegisterServerEvent('mms-robbery:server:RobberyCooldown',function(RobberyCooldownTimer)
-    Citizen.Wait(300000)
-    RobberyCooldown = true
-    while RobberyCooldown do
-        Citizen.Wait(30000)
-        RobberyCooldownTimer = RobberyCooldownTimer - 30000
-        if RobberyCooldownTimer <= 0 then
-            RobberyCooldown = false
-            RobberyCooldownStarted = false
-        end
-    end
-end)
 
 RegisterServerEvent('mms-robbery:server:SetDoorState',function(Door)
     for h,v in ipairs(GetPlayers()) do
@@ -230,14 +237,6 @@ VORPcore.Callback.Register('mms-robbery:callback:CrackedOpenBanks', function(sou
 end)
 
 VORPcore.Callback.Register('mms-robbery:callback:GetCooldownStatus', function(source,cb)
-    if RobberyCooldown then
-        return cb(true)
-    else
-        return cb(false)
-    end
-end)
-
-VORPcore.Callback.Register('mms-robbery:callback:GetCooldownStatusStore', function(source,cb)
     if RobberyCooldown then
         return cb(true)
     else
