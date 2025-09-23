@@ -66,9 +66,9 @@ Config.RobberyLocations = {
         Name = 'Blackwater General Store',
         LockpickItem = 'lockpick',
         Locations = {
-            { Coord = vector3(-789.28, -1326.11, 44.0), Cooldown = 1 }, -- Cooldown in Min
-            { Coord = vector3(-783.2,  -1326.48, 44.0), Cooldown = 1 }, -- Cooldown in Min
-            { Coord = vector3(-780.0,  -1321.43, 44.0), Cooldown = 1 }, -- Cooldown in Min
+            { Coord = vector3(-789.28, -1326.11, 44.0), Cooldown = 30 }, -- Cooldown in Min
+            { Coord = vector3(-783.2,  -1326.48, 44.0), Cooldown = 30 }, -- Cooldown in Min
+            { Coord = vector3(-780.0,  -1321.43, 44.0), Cooldown = 30 }, -- Cooldown in Min
         },
         Safe = {math.random(0,99),math.random(0,99),math.random(0,99)}, -- Every math.random(0,99) is 1 in This case its 3 locks
         ChanceToAlertPolice = 100, -- Chance in %
@@ -90,7 +90,7 @@ Config.RobberyLocations = {
             },
         },
         OnDutyCopsNeeded = 0,
-        SpawnNpcsCops = false,
+        SpawnNpcsCops = true,
         NPCCopLocations = {
             { Coord = vector3(-804.18, -1291.56, 43.59) },
             { Coord = vector3(-816.43, -1309.71, 43.79) },

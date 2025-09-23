@@ -157,7 +157,7 @@ RegisterServerEvent('mms-robbery:server:Reward',function(Reward,Type,Name)
         local MaxIndex = #Reward.LuckyItems
         local RandomIndex = math.random(1,MaxIndex)
         local Item = Reward.LuckyItems[RandomIndex]
-        local CanCarry = exports.vorp_inventory:canCarryItem(src, v.ItemName, v.Amount)
+        local CanCarry = exports.vorp_inventory:canCarryItem(src, Item.ItemName, Item.Amount)
         if CanCarry and GetItem then
             exports.vorp_inventory:addItem(src, Item.ItemName, Item.Amount)
             VORPcore.NotifyRightTip(src,_U('RewardItem') .. Item.Amount .. ' ' .. Item.ItemLabel,5000)
