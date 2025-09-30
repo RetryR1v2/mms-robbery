@@ -33,6 +33,7 @@
 - Replace all Files Config Changed
 - Added Config.UseAlertSystem set to false if you will only use the sound to alert police around.
 - this removes the OnDuty Alerts
+- 1.1.9 Fixed Cooldown Error on Bank
 
 # installation 
 

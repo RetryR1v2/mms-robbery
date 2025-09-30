@@ -186,9 +186,9 @@ AddEventHandler('mms-robbery:client:CheckOpenBanks',function (CurrentLocation,Re
         local LocationAlreadyCracked = false
         Citizen.Wait(5)
         for h,v in ipairs(BankCoords) do
-            MyCoords = GetEntityCoords(PlayerPedId())
-            Distance = #(MyCoords - v.Coord)
-            Coords = v.Coord
+            local MyCoords = GetEntityCoords(PlayerPedId())
+            local Distance = #(MyCoords - v.Coord)
+            local CooldownInMin = v.Cooldown * 60000
             if Distance <= 1 then
                 BankGroup2:ShowGroup(Name)
                 if LockpickBank:HasCompleted() then
@@ -222,7 +222,7 @@ AddEventHandler('mms-robbery:client:CheckOpenBanks',function (CurrentLocation,Re
                                         end
                                     end
                                     FreezeEntityPosition(PlayerPedId(),false)
-                                    TriggerServerEvent('mms-robbery:server:AddLocationToAlreadyPicked',v.Coord)
+                                    TriggerServerEvent('mms-robbery:server:AddLocationToAlreadyPicked',v.Coord,CooldownInMin)
                                     TriggerServerEvent('mms-robbery:server:Reward',Reward,Type,Name)
                                 else -- Lockpicking Failed
                                     FreezeEntityPosition(PlayerPedId(),false)
