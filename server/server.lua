@@ -115,6 +115,17 @@ RegisterServerEvent('mms-robbery:server:AlertPolice',function(CurrentLocation,Na
                 TriggerClientEvent('mms-robbery:client:SendAlertToPolice',v,CurrentLocation,Name)
             end
         end
+    else
+        for h,v in ipairs(GetPlayers()) do
+            local src = v
+            local Character = VORPcore.getUser(src).getUsedCharacter
+            local Job = Character.job
+            for h,v in ipairs(Config.PoliceJobs) do
+                if v.Job == Job then
+                    TriggerClientEvent('mms-robbery:client:SendAlertToPolice',v,CurrentLocation,Name)
+                end
+            end
+        end
     end
 end)
 

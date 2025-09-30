@@ -34,6 +34,8 @@
 - Added Config.UseAlertSystem set to false if you will only use the sound to alert police around.
 - this removes the OnDuty Alerts
 - 1.1.9 Fixed Cooldown Error on Bank
+- 1.2.0 Added Function to Alert without Duty Check
+- Just set all Societys to False
 
 # installation 
 
