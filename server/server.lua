@@ -122,7 +122,7 @@ RegisterServerEvent('mms-robbery:server:AlertPolice',function(CurrentLocation,Na
             local Job = Character.job
             for h,v in ipairs(Config.PoliceJobs) do
                 if v.Job == Job then
-                    TriggerClientEvent('mms-robbery:client:SendAlertToPolice',v,CurrentLocation,Name)
+                    TriggerClientEvent('mms-robbery:client:SendAlertToPolice',src,CurrentLocation,Name)
                 end
             end
         end
