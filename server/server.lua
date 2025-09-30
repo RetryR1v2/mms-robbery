@@ -325,6 +325,17 @@ VORPcore.Callback.Register('mms-robbery:callback:GetOnDutyPolice', function(sour
                 OnDutyPolice = OnDutyPolice + 1
             end
         end
+    else
+        for h,v in ipairs(GetPlayers()) do
+            local src = v
+            local Character = VORPcore.getUser(src).getUsedCharacter
+            local Job = Character.job
+            for h,v in ipairs(Config.PoliceJobs) do
+                if v.Job == Job then
+                    OnDutyPolice = OnDutyPolice + 1
+                end
+            end
+        end
     end
     return cb(OnDutyPolice)
 end)
