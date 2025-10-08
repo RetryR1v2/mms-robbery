@@ -52,6 +52,7 @@ RegisterServerEvent('mms-robbery:server:AlertPolice',function(CurrentLocation,Na
             for h,v in ipairs(Config.PoliceJobs) do
                 if v.Job == Job then
                     local DutyStatus = exports["syn_society"]:IsPlayerOnDuty(src, Job)
+                    print(DutyStatus)
                     if DutyStatus then
                         TriggerClientEvent('mms-robbery:client:SendAlertToPolice',src,CurrentLocation,Name)
                     end
@@ -265,6 +266,7 @@ VORPcore.Callback.Register('mms-robbery:callback:GetOnDutyPolice', function(sour
             for h,v in ipairs(Config.PoliceJobs) do
                 if v.Job == Job then
                     local DutyStatus = exports["syn_society"]:IsPlayerOnDuty(src, Job)
+                    print(DutyStatus)
                     if DutyStatus then
                         OnDutyPolice = OnDutyPolice + 1
                     end

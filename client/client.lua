@@ -35,6 +35,7 @@ Citizen.CreateThread(function()
             local Door = v.VaultDoor
             local BankCoords = v.CashLocations
             local OnDutyCopsNeeded = v.OnDutyCopsNeeded
+            local CopModel = v.CopModel
             for h,v in ipairs(v.Locations) do
                 local CurrentLocation = v.Coord
                 local dist = #(MyCoords - v.Coord)
@@ -77,7 +78,7 @@ Citizen.CreateThread(function()
                                         TriggerServerEvent('mms-robbery:server:Reward',Reward,Type,Name)
                                         if CurrentChance <= Chance and not PoliceAlerted then
                                             if not NPCPoliceSpawned then
-                                                TriggerEvent('mms-robbery:client:SpawnNpcPolice',SpawnNPCS,NPCLocations)
+                                                TriggerEvent('mms-robbery:client:SpawnNpcPolice',SpawnNPCS,NPCLocations,CopModel)
                                             end
                                             if Config.PlayAlarms then
                                                 TriggerServerEvent('mms-robbery:server:PlaySound',CurrentLocation)
@@ -95,7 +96,7 @@ Citizen.CreateThread(function()
                                         end
                                         if CurrentChance <= Chance and not PoliceAlerted then
                                             if not NPCPoliceSpawned then
-                                                TriggerEvent('mms-robbery:client:SpawnNpcPolice',SpawnNPCS,NPCLocations)
+                                                TriggerEvent('mms-robbery:client:SpawnNpcPolice',SpawnNPCS,NPCLocations,CopModel)
                                             end
                                             if Config.PlayAlarms then
                                                 TriggerServerEvent('mms-robbery:server:PlaySound',CurrentLocation)
@@ -147,7 +148,7 @@ Citizen.CreateThread(function()
                                     TriggerServerEvent('mms-robbery:server:SetBankState',CurrentLocation)
                                     if not PoliceAlerted then
                                         if not NPCPoliceSpawned then
-                                            TriggerEvent('mms-robbery:client:SpawnNpcPolice',SpawnNPCS,NPCLocations)
+                                            TriggerEvent('mms-robbery:client:SpawnNpcPolice',SpawnNPCS,NPCLocations,CopModel)
                                         end
                                         if Config.PlayAlarms then
                                             TriggerServerEvent('mms-robbery:server:PlaySound',CurrentLocation)
@@ -336,9 +337,9 @@ RegisterNetEvent('mms-robbery:client:ResetAlert',function()
     PoliceAlerted = false
 end)
 
-RegisterNetEvent('mms-robbery:client:SpawnNpcPolice',function(SpawnNPCS,NPCLocations)
+RegisterNetEvent('mms-robbery:client:SpawnNpcPolice',function(SpawnNPCS,NPCLocations,CopModel)
     if SpawnNPCS then
-        local modelHash = GetHashKey(Config.CopModel)
+        local modelHash = GetHashKey(CopModel)
         while not HasModelLoaded(modelHash) do
             RequestModel(modelHash)
             Citizen.Wait(0)

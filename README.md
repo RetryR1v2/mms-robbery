@@ -36,6 +36,7 @@
 - 1.1.9 Fixed Cooldown Error on Bank
 - 1.2.0 Added Function to Alert without Duty Check
 - Just set all Societys to False
+- 1.2.1 Now can define a cop model for each robbery
 
 # installation 
 

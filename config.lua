@@ -23,7 +23,7 @@ Config.UseAlertSystem = true
 -- OnDuty Settings
 
 Config.synSociety = false -- If You Use SYN Society and go OnDuty in Syn
-Config.VorpDutySystem = true -- VORP DUtySystem
+Config.VorpDutySystem = false -- VORP DUtySystem
 Config.DLSociety = false -- DL Society
 Config.EZSociety = false -- EZ Society
 Config.BCCSociety = false -- BCC Society
@@ -58,8 +58,6 @@ Config.PoliceJobs = {
     { Job = 'BWPolice' },
 }
 
-Config.CopModel = 'CS_VALSHERIFF'
-
 Config.RobberyLocations = {
     { -- Blackwater General Store
         Type = 'Store',
@@ -91,6 +89,7 @@ Config.RobberyLocations = {
         },
         OnDutyCopsNeeded = 0,
         SpawnNpcsCops = true,
+        CopModel = 'CS_VALSHERIFF',
         NPCCopLocations = {
             { Coord = vector3(-804.18, -1291.56, 43.59) },
             { Coord = vector3(-816.43, -1309.71, 43.79) },
@@ -130,6 +129,7 @@ Config.RobberyLocations = {
         },
         OnDutyCopsNeeded = 0,
         SpawnNpcsCops = true,
+        CopModel = 'CS_VALSHERIFF',
         NPCCopLocations = {
             { Coord = vector3(-328.76, 799.37, 117.60) },
             { Coord = vector3(-327.19, 812.95, 117.40) },
@@ -169,6 +169,7 @@ Config.RobberyLocations = {
         },
         OnDutyCopsNeeded = 0,
         SpawnNpcsCops = true,
+        CopModel = 'CS_VALSHERIFF',
         NPCCopLocations = {
             { Coord = vector3(-328.76, 799.37, 117.60) },
             { Coord = vector3(-327.19, 812.95, 117.40) },
@@ -208,6 +209,7 @@ Config.RobberyLocations = {
         },
         OnDutyCopsNeeded = 0,
         SpawnNpcsCops = true,
+        CopModel = 'CS_VALSHERIFF',
         NPCCopLocations = {
             { Coord = vector3(1313.85, -1292.97, 75.92) },
             { Coord = vector3(1297.82, -1311.19, 76.84) },
@@ -247,6 +249,7 @@ Config.RobberyLocations = {
         },
         OnDutyCopsNeeded = 0,
         SpawnNpcsCops = true,
+        CopModel = 'CS_VALSHERIFF',
         NPCCopLocations = {
             { Coord = vector3(1313.85, -1292.97, 75.92) },
             { Coord = vector3(1297.82, -1311.19, 76.84) },
@@ -286,6 +289,7 @@ Config.RobberyLocations = {
         },
         OnDutyCopsNeeded = 0,
         SpawnNpcsCops = true,
+        CopModel = 'CS_VALSHERIFF',
         NPCCopLocations = {
             { Coord = vector3(2934.33, 1310.82, 44.63) },
             { Coord = vector3(2909.26, 1317.88, 45.09) },
@@ -325,6 +329,7 @@ Config.RobberyLocations = {
         },
         OnDutyCopsNeeded = 0,
         SpawnNpcsCops = true,
+        CopModel = 'CS_VALSHERIFF',
         NPCCopLocations = {
             { Coord = vector3(2820.72, -1299.02, 46.90) },
             { Coord = vector3(2840.58, -1290.69, 46.55) },
@@ -364,6 +369,7 @@ Config.RobberyLocations = {
         },
         OnDutyCopsNeeded = 0,
         SpawnNpcsCops = true,
+        CopModel = 'CS_VALSHERIFF',
         NPCCopLocations = {
             { Coord = vector3(2736.38, -1268.67, 49.65) },
             { Coord = vector3(2752.66, -1253.72, 49.43) },
@@ -411,6 +417,7 @@ Config.RobberyLocations = {
         },
         OnDutyCopsNeeded = 0,
         SpawnNpcsCops = true,
+        CopModel = 'CS_VALSHERIFF',
         NPCCopLocations = {
             { Coord = vector3(-807.1,  -1276.58, 43.78) },
             { Coord = vector3(-792.95, -1280.55, 43.75) },
@@ -457,6 +464,7 @@ Config.RobberyLocations = {
         },
         OnDutyCopsNeeded = 0,
         SpawnNpcsCops = true,
+        CopModel = 'CS_VALSHERIFF',
         NPCCopLocations = {
             { Coord = vector3(-328.76, 799.37, 117.60) },
             { Coord = vector3(-327.19, 812.95, 117.40) },
@@ -503,6 +511,7 @@ Config.RobberyLocations = {
         },
         OnDutyCopsNeeded = 0,
         SpawnNpcsCops = true,
+        CopModel = 'CS_VALSHERIFF',
         NPCCopLocations = {
             { Coord = vector3(1313.85, -1292.97, 75.92) },
             { Coord = vector3(1297.82, -1311.19, 76.84) },
@@ -549,6 +558,7 @@ Config.RobberyLocations = {
         },
         OnDutyCopsNeeded = 0,
         SpawnNpcsCops = true,
+        CopModel = 'CS_VALSHERIFF',
         NPCCopLocations = {
             { Coord = vector3(2643.46, -1312.24, 51.12) },
             { Coord = vector3(2633.43, -1285.70, 52.39) },
