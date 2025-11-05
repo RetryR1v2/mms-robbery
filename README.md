@@ -37,6 +37,7 @@
 - 1.2.0 Added Function to Alert without Duty Check
 - Just set all Societys to False
 - 1.2.1 Now can define a cop model for each robbery
+- 1.2.2 Fixed Bug that you can Rob Bank Tresor Over and Over Again
 
 # installation 
 

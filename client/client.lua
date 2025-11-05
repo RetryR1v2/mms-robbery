@@ -190,13 +190,15 @@ AddEventHandler('mms-robbery:client:CheckOpenBanks',function (CurrentLocation,Re
             local MyCoords = GetEntityCoords(PlayerPedId())
             local Distance = #(MyCoords - v.Coord)
             local CooldownInMin = v.Cooldown * 60000
+            local CurrentSafe = v.Coord
             if Distance <= 1 then
                 BankGroup2:ShowGroup(Name)
                 if LockpickBank:HasCompleted() then
                     local PickedLocations = VORPcore.Callback.TriggerAwait('mms-robbery:callback:PickedLocations')
                     if #PickedLocations > 0 then
+
                         for h,v in ipairs(PickedLocations) do
-                            if v.Coords == CurrentLocation and v.IsRobbed then
+                            if v.Coords == CurrentSafe and v.IsRobbed then
                                 LocationAlreadyRobbed = true
                             end
                         end
