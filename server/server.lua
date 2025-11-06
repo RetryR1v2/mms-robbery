@@ -173,7 +173,7 @@ RegisterServerEvent('mms-robbery:server:Reward',function(Reward,Type,Name)
         if CanCarry and GetItem then
             exports.vorp_inventory:addItem(src, Item.ItemName, Item.Amount)
             VORPcore.NotifyRightTip(src,_U('RewardItem') .. Item.Amount .. ' ' .. Item.ItemLabel,5000)
-        else
+        elseif not CanCarry and GetItem then
             VORPcore.NotifyRightTip(src,_U('PocketFullCantCarry') .. Item.Amount .. ' ' .. Item.ItemLabel,5000)
         end
     end
