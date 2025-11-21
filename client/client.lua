@@ -45,6 +45,7 @@ Citizen.CreateThread(function()
                         StoreGroup:ShowGroup(Name)
 
                         if LockpickPrompt:HasCompleted() then
+                            local CopsOnDuty = nil
                             local PickedLocations = VORPcore.Callback.TriggerAwait('mms-robbery:callback:PickedLocations')
                             if #PickedLocations > 0 then
                                 for h,v in ipairs(PickedLocations) do
@@ -53,7 +54,13 @@ Citizen.CreateThread(function()
                                     end
                                 end
                             end
-                            local CopsOnDuty = VORPcore.Callback.TriggerAwait('mms-robbery:callback:GetOnDutyPolice')
+                            if Config.SSPoliceJob then
+                                Export = exports["SS-PoliceJob"]:GetPoliceONDUTY()
+                                CopsOnDuty = Export.nrPoliceOnDuty
+                                print(json.encode(CopsOnDuty))
+                            else
+                                CopsOnDuty = VORPcore.Callback.TriggerAwait('mms-robbery:callback:GetOnDutyPolice')
+                            end
                             if OnDutyCopsNeeded <= CopsOnDuty then
                                 CanStartRobbery = true
                             else
@@ -85,7 +92,17 @@ Citizen.CreateThread(function()
                                             end
                                             TriggerEvent('mms-robbery:client:ResetAlert')
                                             if Config.UseAlertSystem then
-                                                TriggerServerEvent('mms-robbery:server:AlertPolice',CurrentLocation,Name)
+                                                if Config.SSPoliceJob then
+                                                    local coords = {x = CurrentLocation.x, y = CurrentLocation.y, z = CurrentLocation.z}
+                                                    local notify = Config.Title
+                                                    local bliptype = Config.BlipType
+                                                    local blipradius = Config.BlipRadius
+                                                    local blipname = Config.BlipName
+                                                    local blipremove = 10
+                                                    exports["SS-PoliceJob"]:PoliceAlert(coords, notify, blipradius, bliptype, blipname, blipremove)
+                                                else
+                                                    TriggerServerEvent('mms-robbery:server:AlertPolice',CurrentLocation,Name)
+                                                end
                                             end
                                         end
                                     else -- Lockpicking Failed
@@ -103,7 +120,17 @@ Citizen.CreateThread(function()
                                             end
                                             TriggerEvent('mms-robbery:client:ResetAlert')
                                             if Config.UseAlertSystem then
-                                                TriggerServerEvent('mms-robbery:server:AlertPolice',CurrentLocation,Name)
+                                                if Config.SSPoliceJob then
+                                                    local coords = {x = CurrentLocation.x, y = CurrentLocation.y, z = CurrentLocation.z}
+                                                    local notify = Config.Title
+                                                    local bliptype = Config.BlipType
+                                                    local blipradius = Config.BlipRadius
+                                                    local blipname = Config.BlipName
+                                                    local blipremove = 10
+                                                    exports["SS-PoliceJob"]:PoliceAlert(coords, notify, blipradius, bliptype, blipname, blipremove)
+                                                else
+                                                    TriggerServerEvent('mms-robbery:server:AlertPolice',CurrentLocation,Name)
+                                                end
                                             end
                                         end
                                     end
@@ -155,7 +182,17 @@ Citizen.CreateThread(function()
                                         end
                                         TriggerEvent('mms-robbery:client:ResetAlert')
                                         if Config.UseAlertSystem then
-                                            TriggerServerEvent('mms-robbery:server:AlertPolice',CurrentLocation,Name)
+                                            if Config.SSPoliceJob then
+                                                local coords = {x = CurrentLocation.x, y = CurrentLocation.y, z = CurrentLocation.z}
+                                                local notify = Config.Title
+                                                local bliptype = Config.BlipType
+                                                local blipradius = Config.BlipRadius
+                                                local blipname = Config.BlipName
+                                                local blipremove = 10
+                                                exports["SS-PoliceJob"]:PoliceAlert(coords, notify, blipradius, bliptype, blipname, blipremove)
+                                            else
+                                                TriggerServerEvent('mms-robbery:server:AlertPolice',CurrentLocation,Name)
+                                            end
                                         end
                                     end
                                     DeleteEntity(DynamiteObject)

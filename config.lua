@@ -29,6 +29,13 @@ Config.EZSociety = false -- EZ Society
 Config.BCCSociety = false -- BCC Society
 Config.SSPoliceJob = false -- SSPolice
 
+-- SS Alert Settings
+
+Config.Title = 'Raub im Gange'
+Config.BlipType = 1366733613
+Config.BlipRadius = 30.0
+Config.BlipName = 'Raub'
+
 -- xsound Settings Stores
 Config.PlayAlarms = true
 Config.Title = 'Alarm'
